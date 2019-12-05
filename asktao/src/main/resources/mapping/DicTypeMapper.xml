@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dragon.asktao.biz.dic.mapper.DicTypeMapper">
+
+    <resultMap id="DicTypePoMapper" type="DicTypePo">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="code" property="code"/>
+        <result column="sort" property="sort"/>
+        <result column="remark" property="remark"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+    <sql id="whereAttr">
+        <if test="null != id">and dic_type.id = #{id}</if>
+        <if test="null != name">and dic_type.name = #{name}</if>
+        <if test="null != likeName">and dic_type.name like concat(concat('%',#{likeName}),'%')</if>
+        <if test="null != code">and dic_type.code = #{code}</if>
+        <if test="null != sort">and dic_type.sort = #{sort}</if>
+    </sql>
+    <!--插入数据-->
+    <insert id="insertData" parameterType="DicTypePo">
+        INSERT INTO dic_type(id,name,code,sort,remark,create_time)
+        values (#{id},#{name},#{code},#{sort},#{remark},#{createTime})
+    </insert>
+
+    <select id="getPoDataByCondition" parameterType="DicTypeDto" resultType="DicTypePo">
+        SELECT dic_type.* FROM dic_type
+        <where>
+            <include refid="whereAttr"/>
+        </where>
+        <if test="null != orderBy">
+            order by ${orderBy}
+        </if>
+    </select>
+    
+</mapper>
