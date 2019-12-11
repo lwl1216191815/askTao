@@ -5,10 +5,13 @@ import com.dragon.asktao.biz.dic.service.DicTypeService;
 import com.dragon.asktao.common.entity.dto.DicTypeDto;
 import com.dragon.asktao.common.entity.po.DicTypePo;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
+import java.util.HashSet;
 
 @RestController
 @RequestMapping("dicType")
@@ -43,5 +46,23 @@ public class DicTypeController {
         }
         DicTypeDto dicTypeDto = JSONObject.parseObject(json, DicTypeDto.class);
         return dicTypeService.getPageDataByCondition(dicTypeDto,orderBy,pageNum,pageSize);
+    }
+
+    /**
+     * 根据记录ID删除数据
+     * @param ids
+     * @return
+     */
+    @RequestMapping("/deleteDataByIds")
+    public Integer deleteDataByIds(String ids){
+        int count = 0;
+        if(StringUtils.isNotBlank(ids)){
+            String[] idsArray = ids.split(",");
+            HashSet<String> idsSet = new HashSet<>(Arrays.asList(idsArray));
+            DicTypeDto dto = new DicTypeDto();
+            dto.setIncludeIds(idsSet);
+            //count = dicTypeService.deleteDataByDto(dto);
+        }
+        return count;
     }
 }
