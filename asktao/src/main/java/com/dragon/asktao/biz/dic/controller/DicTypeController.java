@@ -3,7 +3,6 @@ package com.dragon.asktao.biz.dic.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.dragon.asktao.biz.dic.service.DicTypeService;
 import com.dragon.asktao.common.entity.dto.DicTypeDto;
-import com.dragon.asktao.common.entity.po.DicTypePo;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +26,7 @@ public class DicTypeController {
     @RequestMapping("/insertData")
     public DicTypeDto insertData(String json){
         DicTypeDto dicTypeDto = JSONObject.parseObject(json, DicTypeDto.class);
-        return dicTypeService.insertData(dicTypeDto);
+        return dicTypeService.insert(dicTypeDto);
     }
 
     /**
@@ -45,7 +44,7 @@ public class DicTypeController {
             pageSize = 0;
         }
         DicTypeDto dicTypeDto = JSONObject.parseObject(json, DicTypeDto.class);
-        return dicTypeService.getPageDataByCondition(dicTypeDto,orderBy,pageNum,pageSize);
+        return dicTypeService.findWithPage(dicTypeDto,orderBy,pageNum,pageSize);
     }
 
     /**
@@ -61,7 +60,7 @@ public class DicTypeController {
             HashSet<String> idsSet = new HashSet<>(Arrays.asList(idsArray));
             DicTypeDto dto = new DicTypeDto();
             dto.setIncludeIds(idsSet);
-            //count = dicTypeService.deleteDataByDto(dto);
+            count = dicTypeService.delete(dto);
         }
         return count;
     }
