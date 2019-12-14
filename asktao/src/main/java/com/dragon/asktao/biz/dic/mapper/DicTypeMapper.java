@@ -9,7 +9,9 @@ import java.util.List;
 @Mapper
 public interface DicTypeMapper {
 
-    Integer insertData(DicTypePo dicTypePo);
+    Integer insert(DicTypePo dicTypePo);
 
-    List<DicTypeDto> getPoDataByCondition(DicTypeDto dto);
+    List<DicTypeDto> find(DicTypeDto dto);
+
+    int delete(DicTypeDto dto);
 }
