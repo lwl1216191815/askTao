@@ -13,18 +13,19 @@
 
     <sql id="whereAttr">
         <if test="null != id">and dic_type.id = #{id}</if>
+        <if test="null != includeIds">and dic_type.id in <foreach collection="includeIds" index="index" item="item" open="(" separator="," close=")">#{item}</foreach></if>
         <if test="null != name">and dic_type.name = #{name}</if>
         <if test="null != likeName">and dic_type.name like concat(concat('%',#{likeName}),'%')</if>
         <if test="null != code">and dic_type.code = #{code}</if>
         <if test="null != sort">and dic_type.sort = #{sort}</if>
     </sql>
     <!--插入数据-->
-    <insert id="insertData" parameterType="DicTypePo">
+    <insert id="insert" parameterType="DicTypePo">
         INSERT INTO dic_type(id,name,code,sort,remark,create_time)
         values (#{id},#{name},#{code},#{sort},#{remark},#{createTime})
     </insert>
-
-    <select id="getPoDataByCondition" parameterType="DicTypeDto" resultType="DicTypePo">
+    <!--查询数据-->
+    <select id="find" parameterType="DicTypeDto" resultType="DicTypePo">
         SELECT dic_type.* FROM dic_type
         <where>
             <include refid="whereAttr"/>
@@ -33,5 +34,11 @@
             order by ${orderBy}
         </if>
     </select>
-    
+    <!--删除数据-->
+    <delete id="delete" parameterType="DicTypeDto">
+        delete from dic_type
+        <where>
+            <include refid="whereAttr"/>
+        </where>
+    </delete>
 </mapper>
