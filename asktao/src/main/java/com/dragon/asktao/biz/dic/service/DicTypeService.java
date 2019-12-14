@@ -12,9 +12,11 @@ public interface DicTypeService {
      * @param dicTypePo 字典类型实体
      * @return
      */
-    DicTypeDto insertData(DicTypeDto dicTypePo);
+    DicTypeDto insert(DicTypeDto dicTypePo);
 
-    List<DicTypeDto> getDtoDataByCondition(DicTypeDto dto,String orderBy);
+    List<DicTypeDto> find(DicTypeDto dto, String orderBy);
 
-    PageInfo<DicTypeDto> getPageDataByCondition(DicTypeDto dto,String orderBy,Integer pageNum,Integer pageSize);
+    PageInfo<DicTypeDto> findWithPage(DicTypeDto dto, String orderBy, Integer pageNum, Integer pageSize);
+
+    int delete(DicTypeDto dto);
 }
